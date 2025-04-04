@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Book List{% endblock title %}
+
+{% block content %}
+<div class="book-list">
+    {% for book in books %}
+    <div class="book-item" onclick="location.href='{% url 'app:book_detail' book.id %}'" style="cursor:pointer;">
+        {% if book.cover_image %}
+            <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" width="200" height="300">
+        {% else %}
+            <img src="#" alt="No Cover" width="200" height="300">
+        {% endif %}
+        <div class="book-info">
+            <h3>{{ book.title }}</h3>
+            <p>{{ book.author }}</p>
+        </div>
+    </div>
+    {% empty %}
+    <p>No books available.</p>
+    {% endfor %}
+</div>
+{% endblock content %}

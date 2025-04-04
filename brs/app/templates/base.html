@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}PrintEase{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+    <script src="{% static 'js/script.js' %}" defer></script>
+</head>
+<body>
+    <nav>
+        <h2 title="Home">Book Review</h2>
+        {% if user.is_authenticated %}
+            <a href="{% url 'app:book_list' %}"><i class="ri-menu-fill"></i>Home</a>
+            <h2>{{ request.user|capfirst }}</h2>
+            <form action="{% url 'users:logout' %}" method="post">
+                {% csrf_token %}
+                <button title="Logout"><h2><i class="ri-logout-box-r-line"></i> Logout</h2></button>
+            </form>
+            
+        {% else %}
+            <a href="/" title="Home"><i class="ri-home-4-line"></i> Home</a>
+            <a href="{% url 'users:login' %}"><i class="ri-login-circle-line"></i> Login</a>
+            <a href="{% url 'users:register' %}" title="Registration"><i class="ri-user-4-line"></i> Register</a>
+        {% endif %}
+    </nav>
+
+    {% block content %}
+    <div id="home">
+        <h1>Home Page</h1>
+        {% if user.is_authenticated %}
+            <h2>Welcome, {{ user.username }}!</h2>
+            <p>Here you can manage your book reviews.</p>
+        {% else %}
+            <h2>Welcome to Book Review!</h2>
+            <p>Please log in or register to start reviewing books.</p>
+        {% endif %}
+    </div>
+    {% endblock content %}
+</body>
+</html>

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}{{ book.title }} Details{% endblock title %}
+
+{% block content %}
+<div class="book-detail">
+    {% if book.cover_image %}
+        <img src="{{ book.cover_image.url }}" alt="{{ book.title }}" width="200" height="300">
+    {% else %}
+        <img src="#" alt="No Cover" width="200" height="300">
+    {% endif %}
+    <h1>{{ book.title }}</h1>
+    <h3>by {{ book.author }}</h3>
+    <p>{{ book.description }}</p>
+    <p><strong>Added on:</strong> {{ book.added_on|date:"M d, Y" }}</p>
+    <a href="{% url 'app:add_review' book.id %}"><button>Add Review</button></a>
+</div>
+
+<div class="reviews">
+    <h2>Reviews</h2>
+    <hr>
+    {% if reviews %}
+        {% for review in reviews %}
+        <div class="review">
+            <p><strong>@{{ review.user.username }}</strong> rated: {{ review.rating }} / 5</p>
+            <p>{{ review.review_text }}</p>
+            <p><small>Reviewed on {{ review.created_at|date:"M d, Y H:i" }}</small></p>
+        </div><hr>
+        {% endfor %}
+    {% else %}
+        <p>No reviews yet. Be the first to review!</p>
+    {% endif %}
+</div>
+{% endblock content %}

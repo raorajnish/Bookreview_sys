@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Add Review for {{ book.title }}{% endblock title %}
+
+{% block content %}
+<div class="add-review">
+    <h1>Add Review for "{{ book.title }}"</h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_rating">Rating:</label>
+            {{ form.rating }}
+        </div>
+        <div class="form-group">
+            <label for="id_review_text">Review:</label>
+            {{ form.review_text }}
+        </div>
+        <button type="submit">Submit Review</button>
+    </form>
+</div>
+{% endblock content %}
